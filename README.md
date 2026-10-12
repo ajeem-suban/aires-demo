@@ -31,16 +31,15 @@ Ambulances lose minutes to blocked roads, accidents and wrong hospital choices, 
 
 How the AIRES system shown in the video is put together:
 
-```mermaid
+````mermaid
 graph TD
-    CP[Presenter Control Panel] -->|inject or clear event| API[FastAPI Backend]
-    API --> ST[state.py<br/>shared trip state]
-    API --> RT[real_router.py<br/>route and re-route]
-    RT --> GR[(trichy_graph.pkl<br/>real Trichy road graph)]
-    API --> WS[WebSocket<br/>/ws/routing/ambulance_id]
-    WS --> DR[Driver Screen]
-    WS --> HD[Hospital Dashboard]
-```
+    CP["Presenter Control Panel"] -->|"inject or clear event"| API["FastAPI Backend"]
+    API --> ST["state.py - shared trip state"]
+    API --> RT["real_router.py - route and re-route"]
+    RT --> GR[("trichy_graph.pkl - real Trichy road graph")]
+    API --> WS["WebSocket push"]
+    WS --> DR["Driver Screen"]
+    WS --> HD["Hospital Dashboard"]
 
 **Design principle:** one backend owns the trip state and the routing decision, and both screens only display what the WebSocket pushes, so the driver and the hospital can never disagree about the route.
 
@@ -48,13 +47,12 @@ graph TD
 
 ```mermaid
 flowchart TD
-    A[Start trip<br/>ambulance moves along planned route] --> B{Event injected?}
-    B -- No --> A
-    B -- Accident, Flood,<br/>Traffic Jam, Construction --> C[Backend re-plans route<br/>on the real road graph]
-    C --> D[New route and ETA<br/>pushed over WebSocket]
-    D --> E[Driver screen updates]
-    D --> F[Hospital dashboard updates]
-```
+    A["Start trip - ambulance moves along planned route"] --> B{"Event injected?"}
+    B -->|"No"| A
+    B -->|"Accident, Flood, Traffic Jam or Construction"| C["Backend re-plans route on the real road graph"]
+    C --> D["New route and ETA pushed over WebSocket"]
+    D --> E["Driver screen updates"]
+    D --> F["Hospital dashboard updates"]
 
 ## 📁 Current Repository
 
@@ -149,3 +147,4 @@ Fork → Branch → Commit → Pull Request
 MIT
 
 _One routing decision, shown to everyone who needs it, at the same moment._
+````
