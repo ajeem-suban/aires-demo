@@ -31,38 +31,42 @@ Ambulances lose minutes to blocked roads, accidents and wrong hospital choices, 
 
 How the AIRES system shown in the video is put together:
 
-mermaid
+```mermaid
 graph TD
-CP["Presenter Control Panel"] -->|"inject or clear event"| API["FastAPI Backend"]
-API --> ST["state.py - shared trip state"]
-API --> RT["real_router.py - route and re-route"]
-RT --> GR[("trichy_graph.pkl - real Trichy road graph")]
-API --> WS["WebSocket push"]
-WS --> DR["Driver Screen"]
-WS --> HD["Hospital Dashboard"]
+    CP["Presenter Control Panel"] -->|"inject or clear event"| API["FastAPI Backend"]
+    API --> ST["state.py - shared trip state"]
+    API --> RT["real_router.py - route and re-route"]
+    RT --> GR[("trichy_graph.pkl - real Trichy road graph")]
+    API --> WS["WebSocket push"]
+    WS --> DR["Driver Screen"]
+    WS --> HD["Hospital Dashboard"]
+```
 
 **Design principle:** one backend owns the trip state and the routing decision, and both screens only display what the WebSocket pushes, so the driver and the hospital can never disagree about the route.
 
 ## 🔄 Workflow
 
-mermaid
+```mermaid
 flowchart TD
-A["Start trip - ambulance moves along planned route"] --> B{"Event injected?"}
-B -->|"No"| A
-B -->|"Accident, Flood, Traffic Jam or Construction"| C["Backend re-plans route on the real road graph"]
-C --> D["New route and ETA pushed over WebSocket"]
-D --> E["Driver screen updates"]
-D --> F["Hospital dashboard updates"]
+    A["Start trip - ambulance moves along planned route"] --> B{"Event injected?"}
+    B -->|"No"| A
+    B -->|"Accident, Flood, Traffic Jam or Construction"| C["Backend re-plans route on the real road graph"]
+    C --> D["New route and ETA pushed over WebSocket"]
+    D --> E["Driver screen updates"]
+    D --> F["Hospital dashboard updates"]
+```
 
 ## 📁 Current Repository
 
+```
 aires-demo/
-├── index.html # demo page: video, project details, simulation result, author links
-├── aires-demo.mp4 # screen recording of the live re-routing demo
-├── ajeem-suban.webp # author photo shown on the page
+├── index.html          # demo page: video, project details, simulation result, author links
+├── aires-demo.mp4      # screen recording of the live re-routing demo
+├── ajeem-suban.webp    # author photo shown on the page
 ├── assets/
-│ └── banner.png # README banner
+│   └── banner.png      # README banner
 └── README.md
+```
 
 _Flat structure by design: the page is a single static file with no build step._
 
@@ -99,10 +103,11 @@ AIRES was never slower than no re-routing in these runs. These numbers come from
 
 ### Preview this page locally
 
-bash
+```bash
 git clone https://github.com/ajeem-suban/aires-demo.git
 cd aires-demo
 python -m http.server 8000
+```
 
 Open `http://localhost:8000`.
 
@@ -114,8 +119,9 @@ Import the repository at `vercel.com/new`, keep the framework preset as **Other*
 
 Clone [AIRES-AI](https://github.com/ajeem-suban/AIRES-AI), then from its `backend` folder:
 
-bash
+```bash
 uvicorn app.main:app --reload --host 0.0.0.0
+```
 
 Open `http://127.0.0.1:8000/dashboards/`.
 
