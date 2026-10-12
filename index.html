@@ -1,250 +1,471 @@
 <!doctype html>
+
 <html lang="en">
+
   <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>AIRES Demo — AI Emergency Response System by Ajeem Suban</title>
+
     <meta
+
       name="description"
+
       content="Demo video and project details for AIRES, an AI-powered ambulance dispatch and live re-routing system built by Ajeem Suban."
+
     />
+
     <meta name="author" content="Ajeem Suban" />
+
+    <link rel="canonical" href="https://aires-demo-eight.vercel.app/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://aires-demo-eight.vercel.app/sitemap.xml" />
+
     <meta property="og:type" content="website" />
+
+    <meta property="og:url" content="https://aires-demo-eight.vercel.app/" />
+
     <meta property="og:title" content="AIRES Demo — AI Emergency Response System" />
+
     <meta
+
       property="og:description"
+
       content="Watch AIRES re-route an ambulance live when a road is blocked."
+
     />
+
     <link rel="icon" href="https://ajeem-suban.vercel.app/favicon-32x32.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
+
       rel="stylesheet"
+
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500&display=swap"
+
     />
 
     <style>
+
       :root {
+
         --bg: #09090f;
+
         --panel: #12121c;
+
         --line: #26263a;
+
         --text: #f4f4f8;
+
         --muted: #a3a3b8;
+
         --accent: #8b5cf6;
+
         --accent-soft: #c4b5fd;
+
       }
+
       * { box-sizing: border-box; }
+
       html { scroll-behavior: smooth; }
+
       body {
+
         margin: 0;
+
         background: var(--bg);
+
         color: var(--text);
+
         font-family: "Inter", system-ui, sans-serif;
+
         line-height: 1.65;
+
       }
+
       h1, h2, h3 {
+
         font-family: "Outfit", system-ui, sans-serif;
+
         line-height: 1.15;
+
         margin: 0;
+
       }
+
       a { color: var(--accent-soft); }
+
       a:focus-visible, .btn:focus-visible, video:focus-visible {
+
         outline: 3px solid var(--accent-soft);
+
         outline-offset: 3px;
+
       }
+
       .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
       section { padding: 44px 0 0; }
 
       /* Header */
+
       header { padding: 48px 0 8px; }
+
       h1 { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 800; }
+
       header p { max-width: 62ch; color: var(--muted); margin: 14px 0 0; font-size: 1.05rem; }
 
       /* Video: the main thing on the page */
+
       .video-frame {
+
         margin-top: 28px;
+
         background: #000;
+
         border: 1px solid var(--line);
+
         border-radius: 14px;
+
         overflow: hidden;
+
         box-shadow: 0 0 60px rgba(139, 92, 246, 0.18);
+
       }
+
       video, iframe.yt { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+
       .caption { color: var(--muted); font-size: 0.92rem; margin: 10px 0 0; }
 
       h2 { font-size: 1.5rem; margin-bottom: 12px; }
+
       p { margin: 0 0 12px; max-width: 70ch; }
 
       /* Two columns that stack on mobile */
+
       .cols { display: grid; gap: 28px; grid-template-columns: 1fr 1fr; }
+
       @media (max-width: 720px) { .cols { grid-template-columns: 1fr; } }
 
       .status { list-style: none; padding: 0; margin: 0; }
+
       .status li {
+
         padding: 12px 14px;
+
         border: 1px solid var(--line);
+
         border-left: 3px solid var(--accent);
+
         border-radius: 8px;
+
         background: var(--panel);
+
         margin-bottom: 10px;
+
       }
+
       .status b { font-family: "Outfit", sans-serif; display: block; }
+
       .status span { color: var(--muted); font-size: 0.93rem; }
+
       .status li.progress { border-left-color: #f59e0b; }
+
       .status li.planned { border-left-color: #6b7280; }
 
       .result {
+
         background: var(--panel);
+
         border: 1px solid var(--line);
+
         border-radius: 12px;
+
         padding: 20px;
+
       }
+
       .result .big { font-family: "Outfit", sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent-soft); }
+
       .note { color: var(--muted); font-size: 0.9rem; }
 
       /* About */
+
       .about { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+
       .about img {
+
         width: 132px; height: 132px; border-radius: 50%;
+
         object-fit: cover; border: 2px solid var(--accent);
+
       }
+
       .about div { flex: 1 1 280px; }
 
       .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
       .btn {
+
         display: inline-block; padding: 10px 18px; border-radius: 999px;
+
         border: 1px solid var(--line); background: var(--panel);
+
         color: var(--text); text-decoration: none; font-weight: 500;
+
         transition: border-color 0.2s, background 0.2s;
+
       }
+
       .btn:hover { border-color: var(--accent); background: #1a1a2a; }
+
       .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
       .btn.primary:hover { background: #7c3aed; }
 
       footer { padding: 48px 0 40px; color: var(--muted); font-size: 0.9rem; }
+
       @media (prefers-reduced-motion: reduce) {
+
         html { scroll-behavior: auto; }
+
         .btn { transition: none; }
+
       }
+
     </style>
+
   </head>
 
   <body>
+
     <div class="wrap">
+
       <header>
+
         <h1>AIRES: an ambulance that re-routes itself</h1>
+
         <p>
+
           AIRES (AI Intelligent Response &amp; Emergency System) is a student-built
+
           emergency response platform. When a road is blocked, it re-routes the
+
           ambulance live and updates the driver and the hospital together.
+
         </p>
+
       </header>
 
       <main>
+
         <!-- DEMO VIDEO
+
              Option A (default): MP4 file placed next to this index.html, named aires-demo.mp4
+
              Option B: YouTube. Delete the <video> block and use this instead:
+
              <iframe class="yt" src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+
                title="AIRES demo video" allowfullscreen loading="lazy"></iframe>
+
         -->
+
         <div class="video-frame">
+
           <video controls playsinline preload="metadata" aria-label="AIRES demo video">
+
             <source src="aires-demo.mp4" type="video/mp4" />
+
             Your browser can't play this video.
+
             <a href="aires-demo.mp4">Download the demo video</a>.
+
           </video>
+
         </div>
+
         <p class="caption">
+
           What you see: a disruption is injected from the control panel, AIRES
+
           re-routes the ambulance, and the driver screen and hospital dashboard
+
           update at the same time.
+
         </p>
 
         <section>
+
           <div class="cols">
+
             <div>
+
               <h2>The problem</h2>
+
               <p>
+
                 Ambulances lose minutes to blocked roads, accidents and the wrong
+
                 hospital choice. Drivers and hospitals usually find out late and
+
                 separately.
+
               </p>
+
               <h2 style="margin-top: 22px">What AIRES does</h2>
+
               <p>
+
                 It picks a suitable hospital, plans a route over real road data,
+
                 and keeps checking the route while the ambulance moves. If an
+
                 event blocks the path, it plans a new one and pushes it to every
+
                 screen over WebSockets.
+
               </p>
+
             </div>
+
             <div>
+
               <h2>Where the project stands</h2>
+
               <ul class="status">
+
                 <li>
+
                   <b>Built</b>
+
                   <span>Dispatch logic, hospital recommendation, live re-routing demo over real Trichy roads, three demo screens (driver, hospital, control panel).</span>
+
                 </li>
+
                 <li class="progress">
+
                   <b>In development</b>
+
                   <span>Live GPS tracking and fuller dashboards.</span>
+
                 </li>
+
                 <li class="planned">
+
                   <b>Planned</b>
+
                   <span>CCTV and traffic-signal integration, voice call intake, PostgreSQL, Docker deployment.</span>
+
                 </li>
+
               </ul>
+
               <p class="note">In the demo, traffic, CCTV and weather events are simulated from a control panel. They are not live feeds.</p>
+
             </div>
+
           </div>
+
         </section>
 
         <section>
+
           <h2>Simulation result</h2>
+
           <div class="result">
+
             <div class="big">25% less travel time</div>
+
             <p style="margin-top: 6px">
+
               In 300 simulated runs with a blocked road on the planned route,
+
               the average trip took 7.77 minutes without re-routing and 5.86
+
               minutes with AIRES. AIRES was never slower.
+
             </p>
+
             <p class="note">
+
               This is a simulation result from the project's test scripts, not a
+
               real-world trial.
+
             </p>
+
           </div>
+
         </section>
 
         <section>
+
           <h2>Built by</h2>
+
           <div class="about">
+
             <img
+
               src="ajeem-suban.webp"
+
               alt="Ajeem Suban"
+
               width="132"
+
               height="132"
+
               loading="lazy"
+
             />
+
             <div>
+
               <h3>Ajeem Suban (AJEEM.S)</h3>
+
               <p>
+
                 3rd-year B.Tech student in Artificial Intelligence and Data
+
                 Science at Dhanalakshmi Srinivasan University, Tamil Nadu.
+
                 Founder of TAMIL-AI, a Tamil-first NLP and RAG platform.
+
               </p>
+
             </div>
+
           </div>
+
           <div class="links">
+
             <a class="btn primary" href="https://github.com/ajeem-suban/AIRES-AI" target="_blank" rel="noopener">AIRES on GitHub</a>
+
             <a class="btn" href="https://huggingface.co/AJEEM-SUBAN/AIRES-AI" target="_blank" rel="noopener">Hugging Face</a>
+
             <a class="btn" href="https://www.linkedin.com/in/ajeem-suban/" target="_blank" rel="noopener">LinkedIn</a>
+
             <a class="btn" href="https://ajeem-suban.vercel.app/" target="_blank" rel="noopener">Portfolio</a>
+
             <a class="btn" href="mailto:ajeemsuban060@gmail.com">Email</a>
+
           </div>
+
         </section>
+
       </main>
 
       <footer>AIRES is a work-in-progress student project.</footer>
+
     </div>
+
   </body>
+
 </html>
