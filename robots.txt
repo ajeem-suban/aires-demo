@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aires-demo-eight.vercel.app/sitemap.xml
